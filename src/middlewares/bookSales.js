@@ -19,7 +19,6 @@ const validateParamsCreateBookSales = celebrate({
       bookId: myJoiObjectId().required(),
       quantity: Joi.number().min(1).required()
     }).required()).required(),
-    userId: myJoiObjectId().required(),
     price: Joi.number().required(),
     paymentMethod: Joi.string().required()
   })
@@ -36,7 +35,6 @@ const validateParamsUpdateBookSalesById = celebrate({
       bookId: myJoiObjectId(),
       quantity: Joi.number()
     })),
-    userId: myJoiObjectId(),
     price: Joi.number(),
     paymentMethod: Joi.string()
   })

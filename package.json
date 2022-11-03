@@ -19,7 +19,8 @@
     "mongoose": "^6.6.1",
     "randomstring": "^1.2.2",
     "express-async-handler": "^1.2.0",
-    "lodash.isempty": "^4.4.0"
+    "lodash.isempty": "^4.4.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "eslint": "^8.0.1",

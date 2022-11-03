@@ -15,12 +15,14 @@ const getBookSalesByIdController = asyncHandler(async (request, response) => {
 
 const createBookSalesController = asyncHandler(async (request, response) => {
   const {
-    booksSold, userId, price, paymentMethod
+    booksSold, price, paymentMethod
   } = request.body
+
+  const { userId } = request.headers
 
   const newBookSales = await createBookSalesService({
     booksSold,
-    userId,
+    userId: String(userId),
     price,
     paymentMethod
   })
@@ -35,12 +37,16 @@ const deleteBookSalesByIdController = asyncHandler(async (request, response) => 
 
 const updateBookSalesByIdController = asyncHandler(async (request, response) => {
   const { id } = request.params
+
   const {
-    booksSold, userId, price, paymentMethod
+    booksSold, price, paymentMethod
   } = request.body
+
+  const { userId } = request.headers
+
   const newBookSales = await updateBookSalesByIdService(id, {
     booksSold,
-    userId,
+    userId: String(userId),
     price,
     paymentMethod
   })

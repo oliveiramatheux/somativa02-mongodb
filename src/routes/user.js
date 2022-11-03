@@ -4,7 +4,8 @@ import {
   validateParamsGetUserById,
   validateParamsCreateUser,
   validateParamsDeleteUserById,
-  validateParamsUpdateUser
+  validateParamsUpdateUser,
+  verifyToken
 } from '../middlewares/index.js'
 
 const router = Router()
@@ -13,8 +14,8 @@ router.get('/:id', validateParamsGetUserById, userController.getUserByIdControll
 
 router.post('/', validateParamsCreateUser, userController.createUserController)
 
-router.delete('/:id', validateParamsDeleteUserById, userController.deleteUserByIdController)
+router.delete('/:id', verifyToken, validateParamsDeleteUserById, userController.deleteUserByIdController)
 
-router.patch('/:id', validateParamsUpdateUser, userController.updateUserByIdController)
+router.patch('/:id', verifyToken, validateParamsUpdateUser, userController.updateUserByIdController)
 
 export default router

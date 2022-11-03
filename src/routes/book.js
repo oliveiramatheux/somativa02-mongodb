@@ -5,19 +5,20 @@ import {
   validateParamsCreateBook,
   validateParamsDeleteBookById,
   validateParamsUpdateBookById,
-  validateParamsGetBookByTitle
+  validateParamsGetBookByTitle,
+  verifyToken
 } from '../middlewares/index.js'
 
 const router = Router()
 
-router.get('/:id', validateParamsGetBookById, bookController.getBookByIdController)
+router.get('/:id', verifyToken, validateParamsGetBookById, bookController.getBookByIdController)
 
-router.post('/', validateParamsCreateBook, bookController.createBookController)
+router.post('/', verifyToken, validateParamsCreateBook, bookController.createBookController)
 
-router.delete('/:id', validateParamsDeleteBookById, bookController.deleteBookByIdController)
+router.delete('/:id', verifyToken, validateParamsDeleteBookById, bookController.deleteBookByIdController)
 
-router.patch('/:id', validateParamsUpdateBookById, bookController.updateBookByIdController)
+router.patch('/:id', verifyToken, validateParamsUpdateBookById, bookController.updateBookByIdController)
 
-router.get('/title/:title', validateParamsGetBookByTitle, bookController.getBookByTitleController)
+router.get('/title/:title', verifyToken, validateParamsGetBookByTitle, bookController.getBookByTitleController)
 
 export default router

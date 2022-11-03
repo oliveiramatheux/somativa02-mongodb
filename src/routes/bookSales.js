@@ -5,19 +5,20 @@ import {
   validateParamsCreateBookSales,
   validateParamsDeleteBookSalesById,
   validateParamsUpdateBookSalesById,
-  validateParamsGetBookSalesByUserId
+  validateParamsGetBookSalesByUserId,
+  verifyToken
 } from '../middlewares/index.js'
 
 const router = Router()
 
-router.get('/:id', validateParamsGetBookSalesById, bookSalesController.getBookSalesByIdController)
+router.get('/:id', verifyToken, validateParamsGetBookSalesById, bookSalesController.getBookSalesByIdController)
 
-router.post('/', validateParamsCreateBookSales, bookSalesController.createBookSalesController)
+router.post('/', verifyToken, validateParamsCreateBookSales, bookSalesController.createBookSalesController)
 
-router.delete('/:id', validateParamsDeleteBookSalesById, bookSalesController.deleteBookSalesByIdController)
+router.delete('/:id', verifyToken, validateParamsDeleteBookSalesById, bookSalesController.deleteBookSalesByIdController)
 
-router.patch('/:id', validateParamsUpdateBookSalesById, bookSalesController.updateBookSalesByIdController)
+router.patch('/:id', verifyToken, validateParamsUpdateBookSalesById, bookSalesController.updateBookSalesByIdController)
 
-router.get('/user/list', validateParamsGetBookSalesByUserId, bookSalesController.getBookSalesByUserIdController)
+router.get('/user/list', verifyToken, validateParamsGetBookSalesByUserId, bookSalesController.getBookSalesByUserIdController)
 
 export default router

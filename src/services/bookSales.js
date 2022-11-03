@@ -121,7 +121,7 @@ const updateBookSalesByIdService = async (id, newBookSales) => {
 const getBookSalesByUserIdService = async (params) => {
   const bookSalesResponse = await getBookSalesByUserId(params.userId, params.startDate, params.endDate)
 
-  if (!bookSalesResponse) {
+  if (!bookSalesResponse.length) {
     throw handleError(404, 'Book sales not found')
   }
 

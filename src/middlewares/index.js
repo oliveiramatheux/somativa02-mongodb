@@ -21,6 +21,11 @@ import {
   validateParamsGetBookSalesByUserId
 } from './bookSales.js'
 
+import {
+  validateParamsAuthentication,
+  verifyToken
+} from './auth.js'
+
 export {
   validateParamsGetUserById,
   validateParamsCreateUser,
@@ -35,5 +40,7 @@ export {
   validateParamsCreateBookSales,
   validateParamsDeleteBookSalesById,
   validateParamsUpdateBookSalesById,
-  validateParamsGetBookSalesByUserId
+  validateParamsGetBookSalesByUserId,
+  validateParamsAuthentication,
+  verifyToken
 }

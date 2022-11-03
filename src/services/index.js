@@ -21,6 +21,8 @@ import {
   getBookSalesByUserIdService
 } from './bookSales.js'
 
+import { authenticateUserService } from './auth.js'
+
 export {
   getUser,
   createUser,
@@ -35,5 +37,6 @@ export {
   createBookSalesService,
   deleteBookSalesByIdService,
   updateBookSalesByIdService,
-  getBookSalesByUserIdService
+  getBookSalesByUserIdService,
+  authenticateUserService
 }

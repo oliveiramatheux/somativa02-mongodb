@@ -1,6 +1,7 @@
 import { getUserById, createNewUser, deleteUserById, updateUserById, getUserByLogin } from './user.js'
 import { getBookById, createBook, deleteBookById, updateBookById, getBookByTitle } from './book.js'
 import { getBookSalesById, createNewBookSales, deleteBookSalesById, updateBookSalesById, getBookSalesByUserId } from './bookSales.js'
+import { authenticateUserByLoginAndPassword } from './auth.js'
 
 export {
   getUserById,
@@ -17,5 +18,6 @@ export {
   createNewBookSales,
   deleteBookSalesById,
   updateBookSalesById,
-  getBookSalesByUserId
+  getBookSalesByUserId,
+  authenticateUserByLoginAndPassword
 }
