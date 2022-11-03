@@ -3,7 +3,8 @@ import {
   createNewBookSales,
   deleteBookSalesById,
   updateBookSalesById,
-  getBookSalesByUserId
+  getBookSalesByUserId,
+  getBookById
 } from '../repositories/index.js'
 import { handleError } from '../utils/errors.js'
 import { objectFormatter } from '../utils/objectFormatter.js'
@@ -47,6 +48,26 @@ const getBookSalesByIdService = async (id) => {
 }
 
 const createBookSalesService = async (newBookSales) => {
+  const errors = []
+
+  const bookVerificationPromisses = newBookSales.booksSold.map(async value => {
+    const bookResponse = await getBookById(value.bookId)
+
+    if (!bookResponse) {
+      return errors.push('One or more of the books send not found')
+    }
+
+    const isAvailable = bookResponse.quantityAvailable >= value.quantity
+
+    if (!isAvailable) {
+      errors.push(`The book: ${bookResponse._id} ${bookResponse.title}, no have sufficient volumes to sell`)
+    }
+  })
+
+  await Promise.all(bookVerificationPromisses)
+
+  if (errors.length) throw handleError(400, errors[0])
+
   const newBookSalesResponse = await createNewBookSales(newBookSales)
 
   if (!newBookSalesResponse) {
