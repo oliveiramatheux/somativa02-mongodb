@@ -17,7 +17,7 @@ const validateParamsCreateBookSales = celebrate({
   [Segments.BODY]: Joi.object().keys({
     booksSold: Joi.array().items(Joi.object({
       bookId: myJoiObjectId().required(),
-      quantity: Joi.number().required()
+      quantity: Joi.number().min(1).required()
     }).required()).required(),
     userId: myJoiObjectId().required(),
     price: Joi.number().required(),

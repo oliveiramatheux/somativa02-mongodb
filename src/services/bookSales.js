@@ -4,7 +4,8 @@ import {
   deleteBookSalesById,
   updateBookSalesById,
   getBookSalesByUserId,
-  getBookById
+  getBookById,
+  updateBookById
 } from '../repositories/index.js'
 import { handleError } from '../utils/errors.js'
 import { objectFormatter } from '../utils/objectFormatter.js'
@@ -57,7 +58,7 @@ const createBookSalesService = async (newBookSales) => {
       return errors.push('One or more of the books send not found')
     }
 
-    const isAvailable = bookResponse.quantityAvailable >= value.quantity
+    const isAvailable = bookResponse.quantityAvailable > 0 && bookResponse.quantityAvailable >= value.quantity
 
     if (!isAvailable) {
       errors.push(`The book: ${bookResponse._id} ${bookResponse.title}, no have sufficient volumes to sell`)
@@ -73,6 +74,24 @@ const createBookSalesService = async (newBookSales) => {
   if (!newBookSalesResponse) {
     throw handleError(400, 'An error ocurred when create a book sales')
   }
+
+  const bookUpdateQuantityPromisses = newBookSales.booksSold.map(async value => {
+    const bookResponse = await getBookById(value.bookId)
+
+    if (!bookResponse) {
+      return errors.push('One or more of the books send not found')
+    }
+
+    const bookUpdatedResponse = await updateBookById(bookResponse._id, { quantityAvailable: bookResponse.quantityAvailable - value.quantity })
+
+    if (!bookUpdatedResponse) {
+      errors.push(`Failed when updated book ${value.bookId} quantity`)
+    }
+  })
+
+  await Promise.all(bookUpdateQuantityPromisses)
+
+  if (errors.length) throw handleError(400, errors[0])
 
   return formatBookSaleResponse(newBookSalesResponse)
 }
